@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhouhan760503.github.io</id>
     <title>Gridea</title>
-    <updated>2020-09-24T06:45:51.355Z</updated>
+    <updated>2020-12-29T07:15:38.396Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhouhan760503.github.io"/>
     <link rel="self" href="https://zhouhan760503.github.io/atom.xml"/>
@@ -11,35 +11,41 @@
     <icon>https://zhouhan760503.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
     <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://zhouhan760503.github.io/post/hello-gridea/</id>
-        <link href="https://zhouhan760503.github.io/post/hello-gridea/">
+        <title type="html"><![CDATA[Express学习笔记<1>——Router]]></title>
+        <id>https://zhouhan760503.github.io/post/express-xue-xi-bi-ji-less1greater/</id>
+        <link href="https://zhouhan760503.github.io/post/express-xue-xi-bi-ji-less1greater/">
         </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+        <updated>2020-12-29T06:42:58.000Z</updated>
+        <content type="html"><![CDATA[<p>Node访问页面的方法是通过路由，即url进行访问，创建路由可以通过express.Router的中间件来实现。</p>
+<h2 id="什么是expressrouter">什么是express.Router</h2>
+<p>express的Router是为了我们更好的根据路由来分模块，避免将所有的路由都写在入口文件中，即app.js中<br>
+在express生成的app.js中，能够看到给我们初始化了两个路由<br>
+<img src="https://zhouhan760503.github.io/post-images/1609224662925.png" alt="" loading="lazy"><br>
+这个路由是在route文件夹下对应的js文件中export的，以index为例<br>
+<img src="https://zhouhan760503.github.io/post-images/1609224759311.png" alt="" loading="lazy"><br>
+因此在运行了本地的express应用后，就可以通过对应的url对内容进行访问，目前还没有涉及到具体网页的构建，只是通过请求访问了一个信息，例如访问users页面<br>
+<img src="https://zhouhan760503.github.io/post-images/1609224958307.png" alt="" loading="lazy"><br>
+就能够访问到对应的内容</p>
+<h2 id="如何添加路由">如何添加路由</h2>
+<p>在routes文件夹中新建一个分类的js文件（新建文件是为了更好区分模块，当前index.js所在的模块为根目录，即‘/’；users.js所在的模块为‘/users’，即访问这些文件中设计的内容和请求的路径）<br>
+新建log.js文件，添加如下代码<br>
+<img src="https://zhouhan760503.github.io/post-images/1609225202904.png" alt="" loading="lazy"></p>
+<p>在app.js中引用log.js文件导出的router<br>
+<img src="https://zhouhan760503.github.io/post-images/1609225275475.png" alt="" loading="lazy"><br>
+就可以通过localhost:端口号（一般为3000）/user中的模块访问到当前设置的路由模块，即/log模块，如下图<br>
+<img src="https://zhouhan760503.github.io/post-images/1609225389340.png" alt="" loading="lazy"></p>
+<p>路函数有三个参数，分别问req，res，next<br>
+req：http请求对象<br>
+res：http响应<br>
+next：中间件链中的下一个函数，可以根据需要制定任意数量的回调函数或一个回调函数组，并且只会按添加顺序调用。</p>
+<h2 id="创建路由处理回调函数">创建路由处理回调函数</h2>
+<p>除了在routes文件中定义路由的回调函数外，可以创建controller文件定义回调函数，在route文件中引用，便于管理。<br>
+创建log的controller文件并创建回调函数：<br>
+<img src="https://zhouhan760503.github.io/post-images/1609225708059.png" alt="" loading="lazy"><br>
+在log.js文件中进行引用<br>
+<img src="https://zhouhan760503.github.io/post-images/1609225772839.png" alt="" loading="lazy"><br>
+由此可以通过route对controller文件的引用来获得controller的回调函数。目前请求地址为log模块下的根地址。效果如下：<br>
+<img src="https://zhouhan760503.github.io/post-images/1609225871191.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>
