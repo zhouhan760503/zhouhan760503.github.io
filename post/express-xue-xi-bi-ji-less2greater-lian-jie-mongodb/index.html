@@ -1,0 +1,249 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Express学习笔记&lt;2&gt;——mongodb | 土豆前端奇遇记</title>
+<link rel="shortcut icon" href="https://zhouhan760503.github.io/favicon.ico?v=1609378083846">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zhouhan760503.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Express学习笔记&lt;2&gt;——mongodb | 土豆前端奇遇记 - Atom Feed" href="https://zhouhan760503.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="什么是mongodb
+MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。
+在高负载的情况下，添加更多的节点，可以保证服务器性能。
+MongoDB 旨在为WEB应用提供可扩展的高性能数据存储解决方案。
+Mongo..." />
+    <meta name="keywords" content="Express" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://zhouhan760503.github.io">
+  <img class="avatar" src="https://zhouhan760503.github.io/images/avatar.png?v=1609378083846" alt="">
+  </a>
+  <h1 class="site-title">
+    土豆前端奇遇记
+  </h1>
+  <p class="site-description">
+    土豆种植中
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Express学习笔记&lt;2&gt;——mongodb
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-12-30
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+                <a href="https://zhouhan760503.github.io/tag/IwBsHJrua/" class="post-tag">
+                  # Express
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://zhouhan760503.github.io/post-images/express-xue-xi-bi-ji-less2greater-lian-jie-mongodb.jpg" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h2 id="什么是mongodb">什么是mongodb</h2>
+<p>MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。<br>
+在高负载的情况下，添加更多的节点，可以保证服务器性能。<br>
+MongoDB 旨在为WEB应用提供可扩展的高性能数据存储解决方案。<br>
+MongoDB 将数据存储为一个文档，数据结构由键值(key=&gt;value)对组成。MongoDB 文档类似于 JSON 对象。字段值可以包含其他文档，数组及文档数组。</p>
+<h2 id="mac环境下安装mongodb">Mac环境下安装mongodb</h2>
+<p>提供两种方法</p>
+<ol>
+<li>官网手动下载<br>
+官网地址：https://www.mongodb.com/try/download/community，下载本地版MongoDb，格式为tgz。<br>
+把解压后的文件夹放到 /usr/local 下<br>
+执行</li>
+</ol>
+<p>open -e .bash_profile<br>
+配置环境变量，文件中加入</p>
+<p>export PATH=${PATH}:/usr/local/mongodb-macos-x86_64-4.4.1/bin<br>
+保存后关闭文件，执行以下命令使环境变量生效</p>
+<p>source .bash_profile<br>
+执行 mongod -version ，出现如下信息则证明安装成功<br>
+<img src="https://zhouhan760503.github.io/post-images/1609294958241.png" alt="" loading="lazy"></p>
+<ol start="2">
+<li>homebrew自动安装<br>
+直接通过brew install mongodb的方式已经不能够成功安装mongodb，原因是MongoDB已经宣布不再开源，从2019年9月2日开始 ，HomeBrew也从核心仓库 (#43770) 当中移除了mongodb模块<br>
+（宿舍的校园网本来就brew得慢，折腾了一晚上结果白给）<br>
+不过想要继续使用 brew install mongodb 也是可以的，MongoDB 官方提供了一个单独的 HomeBrew 的社区版本安装：https://github.com/mongodb/homebrew-brew 。<br>
+接下来就参考这个 github 项目的介绍<br>
+先执行 brew tap mongodb/brew ；<br>
+成功后再执行 brew install <formula> 即可；<br>
+我在这里直接安装默认的社区版本，执行：brew install mongodb-community 也可以参考文档安装指定的版本；<br>
+这个 brew tap 的源无法加速，是从 mongodb.org 官方下载的安装包，所以需要多耐心等待一下，如果下载失败，多尝试几次便可安装成功。<br>
+顺便贴一下安装成功后几个默认配置文件的目录，引用自 mongodb/homebrew-brew<br>
+Default Paths for the mongodb-community Formula</li>
+</ol>
+<p>In addition to installing the MongoDB server and tool binaries, the mongodb-community formula creates:</p>
+<p>a configuration file: /usr/local/etc/mongod.conf<br>
+a log directory path: /usr/local/var/log/mongodb<br>
+a data directory path: /usr/local/var/mongodb<br>
+（参考自——https://www.jianshu.com/p/8db0b29a931d）</p>
+<h2 id="在express中使用mongodb">在express中使用mongodb</h2>
+<p><img src="https://zhouhan760503.github.io/post-images/1609376808807.png" alt="" loading="lazy"><br>
+Nodejs操作mongodb需要依赖第三方包mongoose，使用npm install mongoose进行下载即可，Mongoose是在node.js异步环境下对mongodb进行便捷操作的对象模型工具<br>
+如上图，需要先引入第三方模块，require('mongoose')才能进行连接。<br>
+之后connect时url填写想要存放的数据库具体的collection<br>
+在MongoDB中不需要显式创建数据库，如果正在使用的数据库不存在，MongoDB会自动创建<br>
+可以在成功创建连接数据库时打印信息<br>
+出现如下图情况，说明连接数据库成功<br>
+<img src="https://zhouhan760503.github.io/post-images/1609377239938.png" alt="" loading="lazy"></p>
+<h2 id="mongoose的使用">mongoose的使用</h2>
+<p>mongoose提供很多mongodb的操作，但在这次作业中我只用到了两个，查询和插入。mongoose是基于对象模型来进行操作的。<br>
+schema是mongoose里用到的一种数据模式，可以理解为表结构的定义；每个schema会映射到mongodb中的一个collection，它不具备操作数据库的能力<br>
+model是由schema生成的模型，可以对数据库的操作<br>
+如下图，生成了一个Account的model<br>
+<img src="https://zhouhan760503.github.io/post-images/1609377569113.png" alt="" loading="lazy"><br>
+导出这个model，并且可以同时命名他的别名，之后就可以通过模型进行数据库的操作了</p>
+<ol>
+<li>查询<br>
+查询是通过模型类进行操作的（以为是通过生成的模型对象进行操作，又白给了一段时间）<br>
+我这里只是用了find操作，作用是找到所有包含目标字段的数据<br>
+<img src="https://zhouhan760503.github.io/post-images/1609377745388.png" alt="" loading="lazy"><br>
+其他操作可以查看<br>
+http://mongoosejs.net/docs/api.html#Model</li>
+<li>插入<br>
+插入是基于new的model对象来操作的<br>
+<img src="https://zhouhan760503.github.io/post-images/1609377931715.png" alt="" loading="lazy"></li>
+</ol>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFmongodb">什么是mongodb</a></li>
+<li><a href="#mac%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%AE%89%E8%A3%85mongodb">Mac环境下安装mongodb</a></li>
+<li><a href="#%E5%9C%A8express%E4%B8%AD%E4%BD%BF%E7%94%A8mongodb">在express中使用mongodb</a></li>
+<li><a href="#mongoose%E7%9A%84%E4%BD%BF%E7%94%A8">mongoose的使用</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://zhouhan760503.github.io/post/express-xue-xi-bi-ji-less1greater/">
+              <h3 class="post-title">
+                Express学习笔记&lt;1&gt;——Router
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://zhouhan760503.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
