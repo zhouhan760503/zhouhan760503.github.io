@@ -1,102 +1,100 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" >
+
 <title>Express学习笔记&lt;1&gt;——Router | 土豆前端奇遇记</title>
-<link rel="shortcut icon" href="https://zhouhan760503.github.io/favicon.ico?v=1609378083846">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<meta name="description" content="土豆种植中">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" href="https://zhouhan760503.github.io/favicon.ico?v=1616139804222">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://zhouhan760503.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Express学习笔记&lt;1&gt;——Router | 土豆前端奇遇记 - Atom Feed" href="https://zhouhan760503.github.io/atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
-    <meta name="description" content="Node访问页面的方法是通过路由，即url进行访问，创建路由可以通过express.Router的中间件来实现。
-什么是express.Router
-express的Router是为了我们更好的根据路由来分模块，避免将所有的路由都写在入口文..." />
-    <meta name="keywords" content="Express" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://zhouhan760503.github.io">
-  <img class="avatar" src="https://zhouhan760503.github.io/images/avatar.png?v=1609378083846" alt="">
-  </a>
-  <h1 class="site-title">
-    土豆前端奇遇记
-  </h1>
-  <p class="site-description">
-    土豆种植中
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
+  
+    <nav class="navbar border fixed split-nav">
+  <div class="nav-brand">
+    <h3><a href="https://zhouhan760503.github.io">土豆前端奇遇记</a></h3>
   </div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+        
+          <li>
+            
+              <a href="/" class="menu">
+                首页
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/archives" class="menu">
+                归档
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/tags" class="menu">
+                标签
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/post/about" class="menu">
+                关于
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
   </div>
-</div>
+</nav>
 
-        <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              Express学习笔记&lt;1&gt;——Router
-            </h2>
-            <div class="post-info">
-              <span>
-                2020-12-29
-              </span>
-              <span>
-                2 min read
-              </span>
+    <div id="top" class="row site">
+      <div class="sm-12 md-8 col">
+        <div class="paper">
+          <article class="article">
+            <h1>Express学习笔记&lt;1&gt;——Router</h1>
+            <p class="article-meta">
+              2020-12-29
               
-                <a href="https://zhouhan760503.github.io/tag/IwBsHJrua/" class="post-tag">
-                  # Express
+                <a href="https://zhouhan760503.github.io/tag/IwBsHJrua/" class="badge secondary">
+                  Express
                 </a>
               
-            </div>
+            </p>
             
-              <img class="post-feature-image" src="https://zhouhan760503.github.io/post-images/express-xue-xi-bi-ji-less1greater.jpg" alt="">
+              <img src="https://zhouhan760503.github.io/post-images/express-xue-xi-bi-ji-less1greater.jpg" alt="Express学习笔记&lt;1&gt;——Router">
             
-            <div class="post-content-wrapper">
-              <div class="post-content">
-                <p>Node访问页面的方法是通过路由，即url进行访问，创建路由可以通过express.Router的中间件来实现。</p>
+            <div class="post-content">
+              <p>Node访问页面的方法是通过路由，即url进行访问，创建路由可以通过express.Router的中间件来实现。</p>
 <h2 id="什么是expressrouter">什么是express.Router</h2>
 <p>express的Router是为了我们更好的根据路由来分模块，避免将所有的路由都写在入口文件中，即app.js中<br>
 在express生成的app.js中，能够看到给我们初始化了两个路由<br>
@@ -127,76 +125,99 @@ next：中间件链中的下一个函数，可以根据需要制定任意数量�
 由此可以通过route对controller文件的引用来获得controller的回调函数。目前请求地址为log模块下的根地址。效果如下：<br>
 <img src="https://zhouhan760503.github.io/post-images/1609225871191.png" alt="" loading="lazy"></p>
 
-              </div>
-              <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFexpressrouter">什么是express.Router</a></li>
-<li><a href="#%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E8%B7%AF%E7%94%B1">如何添加路由</a></li>
-<li><a href="#%E5%88%9B%E5%BB%BA%E8%B7%AF%E7%94%B1%E5%A4%84%E7%90%86%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0">创建路由处理回调函数</a></li>
-</ul>
-</li>
-</ul>
-
-              </div>
             </div>
           </article>
         </div>
-
+        <div class="paper" data-aos="fade-in">
+          
+        </div>
         
+      </div>
 
+      <div class="sm-12 md-4 col sidebar">
+  <div class="paper info-container">
+    <img src="https://zhouhan760503.github.io/images/avatar.png?v=1616139804222" class="no-responsive avatar">
+    <div class="text-muted">土豆种植中</div>
+    <div class="social-container">
+      
         
-
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://zhouhan760503.github.io/atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      最新文章
+    </div>
+    <div class="row">
+      <ul>
+        
+          
+            <li>
+              <a href="https://zhouhan760503.github.io/post/express-xue-xi-bi-ji-lovegreater-bootstrap-de-yin-ru/">Express学习笔记&lt;3&gt;——bootstrap的引入</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://zhouhan760503.github.io/post/express-xue-xi-bi-ji-less2greater-lian-jie-mongodb/">Express学习笔记&lt;2&gt;——mongodb</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://zhouhan760503.github.io/post/express-xue-xi-bi-ji-less1greater/">Express学习笔记&lt;1&gt;——Router</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://zhouhan760503.github.io/post/about/">关于</a>
+            </li>
+          
+        
+      </ul>
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      标签列表
+    </div>
+    <div class="row">
+      
+        <a href="https://zhouhan760503.github.io/tag/IwBsHJrua/" class="badge secondary">
+          Express
+        </a>
+      
+    </div>
+  </div>
+  <div class="paper">
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://zhouhan760503.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
 </div>
 
-      </div>
+
     </div>
 
-    <script>
-      hljs.initHighlightingOnLoad()
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
-      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+<script type="application/javascript">
 
-      // This should probably be throttled.
-      // Especially because it triggers during smooth scrolling.
-      // https://lodash.com/docs/4.17.10#throttle
-      // You could do like...
-      // window.addEventListener("scroll", () => {
-      //    _.throttle(doThatStuff, 100);
-      // });
-      // Only not doing it here to keep this Pen dependency-free.
+AOS.init();
 
-      window.addEventListener("scroll", event => {
-        let fromTop = window.scrollY;
+hljs.initHighlightingOnLoad()
 
-        mainNavLinks.forEach((link, index) => {
-          let section = document.getElementById(decodeURI(link.hash).substring(1));
-          let nextSection = null
-          if (mainNavLinks[index + 1]) {
-            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-          }
-          if (section.offsetTop <= fromTop) {
-            if (nextSection) {
-              if (nextSection.offsetTop > fromTop) {
-                link.classList.add("current");
-              } else {
-                link.classList.remove("current");    
-              }
-            } else {
-              link.classList.add("current");
-            }
-          } else {
-            link.classList.remove("current");
-          }
-        });
-      });
+</script>
 
-    </script>
+
+
+
   </body>
 </html>

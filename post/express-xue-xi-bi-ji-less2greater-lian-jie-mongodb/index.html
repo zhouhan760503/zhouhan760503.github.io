@@ -1,104 +1,100 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" >
+
 <title>Express学习笔记&lt;2&gt;——mongodb | 土豆前端奇遇记</title>
-<link rel="shortcut icon" href="https://zhouhan760503.github.io/favicon.ico?v=1609378083846">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<meta name="description" content="土豆种植中">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" href="https://zhouhan760503.github.io/favicon.ico?v=1616139804222">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://zhouhan760503.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Express学习笔记&lt;2&gt;——mongodb | 土豆前端奇遇记 - Atom Feed" href="https://zhouhan760503.github.io/atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
-    <meta name="description" content="什么是mongodb
-MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。
-在高负载的情况下，添加更多的节点，可以保证服务器性能。
-MongoDB 旨在为WEB应用提供可扩展的高性能数据存储解决方案。
-Mongo..." />
-    <meta name="keywords" content="Express" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://zhouhan760503.github.io">
-  <img class="avatar" src="https://zhouhan760503.github.io/images/avatar.png?v=1609378083846" alt="">
-  </a>
-  <h1 class="site-title">
-    土豆前端奇遇记
-  </h1>
-  <p class="site-description">
-    土豆种植中
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
+  
+    <nav class="navbar border fixed split-nav">
+  <div class="nav-brand">
+    <h3><a href="https://zhouhan760503.github.io">土豆前端奇遇记</a></h3>
   </div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+        
+          <li>
+            
+              <a href="/" class="menu">
+                首页
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/archives" class="menu">
+                归档
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/tags" class="menu">
+                标签
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/post/about" class="menu">
+                关于
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
   </div>
-</div>
+</nav>
 
-        <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              Express学习笔记&lt;2&gt;——mongodb
-            </h2>
-            <div class="post-info">
-              <span>
-                2020-12-30
-              </span>
-              <span>
-                4 min read
-              </span>
+    <div id="top" class="row site">
+      <div class="sm-12 md-8 col">
+        <div class="paper">
+          <article class="article">
+            <h1>Express学习笔记&lt;2&gt;——mongodb</h1>
+            <p class="article-meta">
+              2020-12-30
               
-                <a href="https://zhouhan760503.github.io/tag/IwBsHJrua/" class="post-tag">
-                  # Express
+                <a href="https://zhouhan760503.github.io/tag/IwBsHJrua/" class="badge ">
+                  Express
                 </a>
               
-            </div>
+            </p>
             
-              <img class="post-feature-image" src="https://zhouhan760503.github.io/post-images/express-xue-xi-bi-ji-less2greater-lian-jie-mongodb.jpg" alt="">
+              <img src="https://zhouhan760503.github.io/post-images/express-xue-xi-bi-ji-less2greater-lian-jie-mongodb.jpg" alt="Express学习笔记&lt;2&gt;——mongodb">
             
-            <div class="post-content-wrapper">
-              <div class="post-content">
-                <h2 id="什么是mongodb">什么是mongodb</h2>
+            <div class="post-content">
+              <h2 id="什么是mongodb">什么是mongodb</h2>
 <p>MongoDB 是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统。<br>
 在高负载的情况下，添加更多的节点，可以保证服务器性能。<br>
 MongoDB 旨在为WEB应用提供可扩展的高性能数据存储解决方案。<br>
@@ -164,86 +160,110 @@ http://mongoosejs.net/docs/api.html#Model</li>
 <img src="https://zhouhan760503.github.io/post-images/1609377931715.png" alt="" loading="lazy"></li>
 </ol>
 
-              </div>
-              <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFmongodb">什么是mongodb</a></li>
-<li><a href="#mac%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%AE%89%E8%A3%85mongodb">Mac环境下安装mongodb</a></li>
-<li><a href="#%E5%9C%A8express%E4%B8%AD%E4%BD%BF%E7%94%A8mongodb">在express中使用mongodb</a></li>
-<li><a href="#mongoose%E7%9A%84%E4%BD%BF%E7%94%A8">mongoose的使用</a></li>
-</ul>
-</li>
-</ul>
-
-              </div>
             </div>
           </article>
         </div>
-
+        <div class="paper" data-aos="fade-in">
+          
+            <div class="next-post">
+              <div class="next">
+                下一篇
+              </div>
+              <a href="https://zhouhan760503.github.io/post/express-xue-xi-bi-ji-less1greater/">
+                <h3 class="post-title">
+                  Express学习笔记&lt;1&gt;——Router
+                </h3>
+              </a>
+            </div>
+          
+        </div>
         
-          <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="https://zhouhan760503.github.io/post/express-xue-xi-bi-ji-less1greater/">
-              <h3 class="post-title">
-                Express学习笔记&lt;1&gt;——Router
-              </h3>
-            </a>
-          </div>
-        
+      </div>
 
+      <div class="sm-12 md-4 col sidebar">
+  <div class="paper info-container">
+    <img src="https://zhouhan760503.github.io/images/avatar.png?v=1616139804222" class="no-responsive avatar">
+    <div class="text-muted">土豆种植中</div>
+    <div class="social-container">
+      
         
-
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://zhouhan760503.github.io/atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      最新文章
+    </div>
+    <div class="row">
+      <ul>
+        
+          
+            <li>
+              <a href="https://zhouhan760503.github.io/post/express-xue-xi-bi-ji-lovegreater-bootstrap-de-yin-ru/">Express学习笔记&lt;3&gt;——bootstrap的引入</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://zhouhan760503.github.io/post/express-xue-xi-bi-ji-less2greater-lian-jie-mongodb/">Express学习笔记&lt;2&gt;——mongodb</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://zhouhan760503.github.io/post/express-xue-xi-bi-ji-less1greater/">Express学习笔记&lt;1&gt;——Router</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://zhouhan760503.github.io/post/about/">关于</a>
+            </li>
+          
+        
+      </ul>
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      标签列表
+    </div>
+    <div class="row">
+      
+        <a href="https://zhouhan760503.github.io/tag/IwBsHJrua/" class="badge warning">
+          Express
+        </a>
+      
+    </div>
+  </div>
+  <div class="paper">
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://zhouhan760503.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
 </div>
 
-      </div>
+
     </div>
 
-    <script>
-      hljs.initHighlightingOnLoad()
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
-      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+<script type="application/javascript">
 
-      // This should probably be throttled.
-      // Especially because it triggers during smooth scrolling.
-      // https://lodash.com/docs/4.17.10#throttle
-      // You could do like...
-      // window.addEventListener("scroll", () => {
-      //    _.throttle(doThatStuff, 100);
-      // });
-      // Only not doing it here to keep this Pen dependency-free.
+AOS.init();
 
-      window.addEventListener("scroll", event => {
-        let fromTop = window.scrollY;
+hljs.initHighlightingOnLoad()
 
-        mainNavLinks.forEach((link, index) => {
-          let section = document.getElementById(decodeURI(link.hash).substring(1));
-          let nextSection = null
-          if (mainNavLinks[index + 1]) {
-            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-          }
-          if (section.offsetTop <= fromTop) {
-            if (nextSection) {
-              if (nextSection.offsetTop > fromTop) {
-                link.classList.add("current");
-              } else {
-                link.classList.remove("current");    
-              }
-            } else {
-              link.classList.add("current");
-            }
-          } else {
-            link.classList.remove("current");
-          }
-        });
-      });
+</script>
 
-    </script>
+
+
+
   </body>
 </html>
