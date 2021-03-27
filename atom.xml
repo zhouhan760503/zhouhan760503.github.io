@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhouhan760503.github.io</id>
     <title>土豆前端奇遇记</title>
-    <updated>2021-03-19T07:44:40.746Z</updated>
+    <updated>2021-03-27T06:39:25.526Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhouhan760503.github.io"/>
     <link rel="self" href="https://zhouhan760503.github.io/atom.xml"/>
@@ -10,6 +10,125 @@
     <logo>https://zhouhan760503.github.io/images/avatar.png</logo>
     <icon>https://zhouhan760503.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 土豆前端奇遇记</rights>
+    <entry>
+        <title type="html"><![CDATA[设计模式（1）——面向对象设计原则]]></title>
+        <id>https://zhouhan760503.github.io/post/she-ji-mo-shi-1-mian-xiang-dui-xiang-she-ji-yuan-ze/</id>
+        <link href="https://zhouhan760503.github.io/post/she-ji-mo-shi-1-mian-xiang-dui-xiang-she-ji-yuan-ze/">
+        </link>
+        <updated>2021-03-27T05:56:05.000Z</updated>
+        <summary type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://zhouhan760503.github.io/post-images/1616824871468.png" alt="" loading="lazy"></figure>
+]]></summary>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://zhouhan760503.github.io/post-images/1616824871468.png" alt="" loading="lazy"></figure>
+<!-- more -->
+<p>设计模式的本质是面向对象设计原则的实际运用，是对类的封装性、继承性和多态性以及类的关联关系和组合关系的充分理解<br>
+目的：降低对象之间的耦合，增加程序的可复用性、可扩展性和可维护性</p>
+<ol>
+<li>
+<p>开闭原则<br>
+软件应当对扩展开放，对修改关闭<br>
+——当应用的需求改变时，在不修改软件实体的源代码或者二进制代码的前提下，可以扩展模块的功能，使其满足新的需求。</p>
+<p>可以通过“抽象约束、封装变化”来实现开闭原则，即通过接口或者抽象类为软件实体定义一个相对稳定的抽象层，而将相同的可变因素封装在相同的具体实现类中。</p>
+</li>
+<li>
+<p>里氏替换原则<br>
+继承必须确保超类所拥有的性质在子类中仍然成立<br>
+——子类可以扩展父类的功能，但不能改变父类原有的功能<br>
+——子类继承父类时，除添加新的方法完成新增功能外，尽量不要重写父类的方法</p>
+<ul>
+<li>子类可以实现父类的抽象方法，但不能覆盖父类的非抽象方法</li>
+<li>子类中可以增加自己特有的方法</li>
+<li>当子类的方法重载父类的方法时，方法的前置条件（即方法的输入参数）要比父类的方法更宽松</li>
+<li>当子类的方法实现父类的方法时（重写/重载或实现抽象方法），方法的后置条件（即方法的的输出/返回值）要比父类的方法更严格或相等</li>
+</ul>
+</li>
+<li>
+<p>依赖倒置原则<br>
+高层模块不应该依赖低层模块，两者都应该依赖其抽象；抽象不应该依赖细节，细节应该依赖抽象<br>
+——要面向接口编程，不要面向实现编程</p>
+<p>作用</p>
+<ul>
+<li>降低类之间的耦合性</li>
+<li>提高系统的稳定性</li>
+<li>减少并行开发引起的风险</li>
+<li>提高代码的可读性和可维护性</li>
+</ul>
+<p>如何满足</p>
+<ul>
+<li>每个累尽量提供接口或抽象类</li>
+<li>变量的声明类型尽量是接口或者抽象类</li>
+<li>任何类都不应该从具体类派生</li>
+<li>使用时尽量遵循里氏替换原则</li>
+</ul>
+</li>
+<li>
+<p>单一职责原则<br>
+一个类应该有且仅有一个引起它变化的原因，否则类应该被拆分</p>
+<p>作用</p>
+<ul>
+<li>降低类的复杂度</li>
+<li>提高类的可读性</li>
+<li>提高系统的可维护性</li>
+<li>变更引起的风险降低</li>
+</ul>
+</li>
+<li>
+<p>接口隔离原则<br>
+客户端不应该被迫依赖于它不使用的方法<br>
+——要为各个类建立它们需要的专用接口，而不要试图去建立一个很庞大的接口供所有依赖它的类去调用</p>
+<p>优点</p>
+<ul>
+<li>预防外来变更的扩散，提高系统的灵活性和可维护性</li>
+<li>提高系统的内聚性，减少对外交互，降低系统的耦合性</li>
+<li>如果粒度大小合理，能够保证系统的稳定性；如果定义过小，接口数量过多，设计复杂；如果定义过大，灵活性降低，带来不可预料的风险</li>
+<li>体现对象的层次，通过接口继承体现总接口</li>
+<li>减少代码冗余</li>
+</ul>
+<p>实现</p>
+<ul>
+<li>接口有限度的小</li>
+<li>为依赖接口的类定制服务、了解环境</li>
+<li>提高内聚，减少对外交互</li>
+</ul>
+</li>
+<li>
+<p>迪米特法则<br>
+最少知识原则<br>
+如果两个软件实体无须直接通信，那么就不应当发生直接的相互调用，可以通过第三方转发该调用——降低类之间的耦合度，提高模块的相对独立性</p>
+<p>优点</p>
+<ul>
+<li>降低类的耦合度，提高模块的相对独立性</li>
+<li>提高类的可复用率和系统的扩展性</li>
+</ul>
+<p>实现</p>
+<ul>
+<li>在类的划分上，应该创建弱耦合的类。类与类之间的耦合越弱，就越有利于实现可复用的目标</li>
+<li>在类的结构设计上，尽量降低类成员的访问权限</li>
+<li>在类的设计上，优先考虑将一个类设置成不变类</li>
+<li>在对其他类的引用上，将引用其他对象的次数降到最低</li>
+<li>不暴露类的属性成员，而应该提供相应的访问器（set 和 get 方法）</li>
+<li>谨慎使用序列化（Serializable）功能</li>
+</ul>
+</li>
+<li>
+<p>合成复用原则<br>
+在软件复用时，要尽量先使用组合或者聚合等关联关系来实现，其次才考虑使用继承关系来实现<br>
+如果要使用继承关系，要严格遵循里氏替换原则</p>
+<p>继承的缺点</p>
+<ul>
+<li>继承复用破坏了类的封装性。因为继承会将父类的实现细节暴露给子类，父类对子类是透明的，所以这种复用又称为“白箱”复用</li>
+<li>子类与父类的耦合度高。父类的实现的任何改变都会导致子类的实现发生变化，这不利于类的扩展与维护。</li>
+<li>它限制了复用的灵活性。从父类继承而来的实现是静态的，在编译时已经定义，所以在运行时不可能发生变化</li>
+</ul>
+<p>组合/聚合的优点</p>
+<ul>
+<li>它维持了类的封装性。因为成分对象的内部细节是新对象看不见的，所以这种复用又称为“黑箱”复用</li>
+<li>新旧类之间的耦合度低。这种复用所需的依赖较少，新对象存取成分对象的唯一方法是通过成分对象的接口</li>
+<li>复用的灵活性高。这种复用可以在运行时动态进行，新对象可以动态地引用与成分对象类型相同的对象</li>
+</ul>
+</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Express学习笔记<2>——mongodb]]></title>
         <id>https://zhouhan760503.github.io/post/express-xue-xi-bi-ji-less2greater-lian-jie-mongodb/</id>
