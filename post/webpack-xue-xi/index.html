@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>webpack学习 | 土豆前端奇遇记</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://zhouhan760503.github.io/favicon.ico?v=1618226166400">
+<link rel="stylesheet" href="https://zhouhan760503.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="[toc]
+webpack是js应用程序静态模块打包器，能够在处理程序时递归构建依赖关系图，然后将所有模块打包成一个或多个bundle
+webpack的四个核心概念：
+
+
+入口
+
+入口（entry point）指示webpack使用那个模块..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://zhouhan760503.github.io">
+        <img src="https://zhouhan760503.github.io/images/avatar.png?v=1618226166400" class="site-logo">
+        <h1 class="site-title">土豆前端奇遇记</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      土豆种植中
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://zhouhan760503.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">webpack学习</h2>
+            <div class="post-date">2021-04-12</div>
+            
+            <div class="post-content" v-pre>
+              <p>[toc]<br>
+webpack是js应用程序静态模块打包器，能够在处理程序时递归构建依赖关系图，然后将所有模块打包成一个或多个<em>bundle</em></p>
+<h1 id="webpack的四个核心概念">webpack的四个核心概念：</h1>
+<ul>
+<li>
+<p>入口</p>
+<ul>
+<li>入口（entry point）指示webpack使用那个模块来作为构建内部依赖图的开始。可以在webpack中配置entry属性，来指定一个（或多个）入口起点，默认指定为./src</li>
+<li><img src="https://zhouhan760503.github.io/post-images/1618221618654.png" alt="" loading="lazy"></li>
+<li>当向entry传入一个数组时，将创建多个主入口（multi-main entry）</li>
+</ul>
+</li>
+<li>
+<p>输出</p>
+<ul>
+<li>出口（out put）告诉webpack在那里输出他创建的bundles和如何命名这些文件，默认值为./dist，整个应用程序结构都会被编译到指定的输出路径中，可以在配置中指定一个output字段</li>
+<li><img src="https://zhouhan760503.github.io/post-images/1618221732257.png" alt="" loading="lazy"></li>
+<li>可以存在多个入口，但是只能存在一个出口</li>
+<li>出口对象包括两个属性，filename和path
+<ul>
+<li>filename：用于输出文件的文件名</li>
+<li>path：目标输出目录的绝对路径</li>
+</ul>
+</li>
+<li>如果有多个入口，可以使用<a href="https://www.webpackjs.com/configuration/output/#output-filename">占位符</a>来确保文件的唯一名称</li>
+</ul>
+</li>
+<li>
+<p>loader</p>
+<ul>
+<li>让webpack能够处理非js文件（webpack只能理解js文件），loader将所有的文件转化成webpack能够理解的有效模块，便于之后打包；在import或者加载模块时预处理文件</li>
+<li>本质上，loader将所有类型的文件，转换成应用程序的依赖图可以直接引用的模块</li>
+<li>loader有两个目标
+<ul>
+<li>test属性，用于标识出被对应的loader进行转换的某个或某些文件</li>
+<li>use属性，表示进行转换时，应该使用哪一个loader</li>
+</ul>
+</li>
+<li>在定义rules时，要定义在module.rules中，而不是rules</li>
+<li>使用时，类似于如下
+<ul>
+<li>嘿，webpack 编译器，当你碰到「在 require()/import 语句中被解析为 '.txt' 的路径」时，在你对它打包之前，先使用 raw-loader 转换一下</li>
+</ul>
+</li>
+<li>有三种使用loader的方法
+<ul>
+<li>配置
+<ul>
+<li>在module.rules中配置loader</li>
+<li><img src="https://zhouhan760503.github.io/post-images/1618223622129.png" alt="" loading="lazy"></li>
+</ul>
+</li>
+<li>内联</li>
+<li><img src="https://zhouhan760503.github.io/post-images/1618223683234.png" alt="" loading="lazy"></li>
+<li>CLI</li>
+<li><img src="https://zhouhan760503.github.io/post-images/1618223727048.png" alt="" loading="lazy"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>插件</p>
+<ul>
+<li>插件能够执行比loader拥有更大适用范围的任务，包括打包优化和压缩，一直到重新定义环境中的变量</li>
+<li>使用时，先require，而后Tina驾到plugins数组中</li>
+<li>如果需要因为不同目的使用一个插件，要使用new操作符来创建它的一个实例</li>
+<li><img src="https://zhouhan760503.github.io/post-images/1618222287594.png" alt="" loading="lazy"></li>
+</ul>
+</li>
+<li>
+<p>模式</p>
+<ul>
+<li>告知webpack使用相应模式的内置优化</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>development</td>
+<td>会将 process.env.NODE_ENV 的值设为 development。启用 NamedChunksPlugin 和 NamedModulesPlugin</td>
+</tr>
+<tr>
+<td>production</td>
+<td>会将 process.env.NODE_ENV 的值设为 production。启用 FlagDependencyUsagePlugin, FlagIncludedChunksPlugin, ModuleConcatenationPlugin, NoEmitOnErrorsPlugin, OccurrenceOrderPlugin, SideEffectsFlagPlugin 和 UglifyJsPlugin</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h1 id="模块">模块</h1>
+<p>模块化编程中，开发者将程序分解成列三功能快<br>
+每个模块具有比完整程序更小的接触面，从而方便娇艳、调试和测试<br>
+相比于node模块，webpack模块能够用多种方式表达依赖关系：</p>
+<ul>
+<li>ES2015 import 语句</li>
+<li>CommonJS require() 语句</li>
+<li>AMD define 和 require 语句</li>
+<li>css/sass/less 文件中的 @import 语句。</li>
+<li>样式(url(...))或 HTML 文件(<img src=...>)中的图片链接(image url)</li>
+</ul>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://zhouhan760503.github.io/post/she-ji-mo-shi-1-mian-xiang-dui-xiang-she-ji-yuan-ze/">
+                  <h3 class="post-title">
+                    设计模式&lt;1&gt;——面向对象设计原则
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
